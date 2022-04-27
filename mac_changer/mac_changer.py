@@ -19,7 +19,7 @@ def get_arguments():
     (options, arguments) = parser.parse_args()
     if not options.interface:
         parser.error("[-] Please specify an interface, use --help for more info.")
-    if not options.new_mac:
+    if not options.new_mac and not options.random:
         parser.error("[-] Please specify a new MAC address, use --help for more info.")
     if options.random and options.new_mac:
         parser.error("[-] Please specify only one option, use --help for more info.")
