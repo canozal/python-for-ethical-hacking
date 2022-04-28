@@ -1,6 +1,7 @@
 import subprocess
 import optparse
 import random
+import re
 
 
 def random_mac():
@@ -38,4 +39,13 @@ def change_mac(interface, new_mac):
 
 options = get_arguments()
 
-change_mac(options.interface, options.new_mac)
+# change_mac(options.interface, options.new_mac)
+
+ifconfig_result = subprocess.check_output(["ifconfig", options.interface])
+
+mac_address_search_result = re.search(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", ifconfig_result.decode("utf-8"))
+
+if mac_address_search_result:
+    print("[+] Current MAC address: " + mac_address_search_result.group(0))
+else:
+    print("[-] Could not read MAC address.")
